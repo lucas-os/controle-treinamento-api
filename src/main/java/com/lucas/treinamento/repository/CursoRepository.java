@@ -27,7 +27,7 @@ public class CursoRepository {
         jdbcTemplate.update(sql, codigo);
     }
 
-    public List<Curso> listCursos(){
+    public List<Curso> listarCursos(){
         String sql = "SELECT Codigo, Nome, Descricao, Duracao FROM Curso";
 
         RowMapper<Curso> mapper = (rs, rowNum) -> {

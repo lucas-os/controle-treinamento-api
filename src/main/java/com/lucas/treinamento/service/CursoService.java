@@ -37,19 +37,7 @@ public class CursoService {
         if(codigo <= 0){
             throw new IllegalArgumentException("Código do curso inválido"); //recebeu algo invalido
         }
-
         cursoR.deletarCurso(codigo);
-    }
-
-    public List<Curso> listarCurso(){
-
-        List<Curso> listaDeCursos = cursoR.listCursos();
-
-        if(listaDeCursos.isEmpty()){
-            throw new IllegalStateException("Lista está vazia, nenhum curso cadastrado"); //recebe algo valido mas a operacao nao funciona
-        }
-
-        return listaDeCursos;
     }
 
     public void alterarCurso(Curso curso){
@@ -69,7 +57,16 @@ public class CursoService {
         if(curso.getDuracao() <= 0){
             throw new IllegalArgumentException("Duração deve ser maior que 0");
         }
-
         cursoR.alterarCurso(curso);
+    }
+
+    public List<Curso> listarCurso(){
+
+        List<Curso> listaDeCursos = cursoR.listarCursos();
+
+        if(listaDeCursos.isEmpty()){
+            throw new IllegalStateException("Lista está vazia, nenhum curso cadastrado"); //recebe algo valido mas a operacao nao funciona
+        }
+        return listaDeCursos;
     }
 }
