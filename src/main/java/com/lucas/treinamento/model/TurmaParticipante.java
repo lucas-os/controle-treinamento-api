@@ -1,7 +1,5 @@
 package com.lucas.treinamento.model;
 
-import java.time.LocalDate;
-
 public class TurmaParticipante {
 
     private Integer codigo;

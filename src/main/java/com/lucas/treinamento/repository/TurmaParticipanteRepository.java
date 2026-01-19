@@ -1,7 +1,6 @@
 package com.lucas.treinamento.repository;
 
 import com.lucas.treinamento.model.Funcionario;
-import com.lucas.treinamento.model.Turma;
 import com.lucas.treinamento.model.TurmaParticipante;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

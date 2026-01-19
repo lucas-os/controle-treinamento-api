@@ -1,12 +1,9 @@
 package com.lucas.treinamento.service;
 
-import com.lucas.treinamento.model.Turma;
 import com.lucas.treinamento.model.TurmaParticipante;
 import com.lucas.treinamento.repository.TurmaParticipanteRepository;
-import com.lucas.treinamento.repository.TurmaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

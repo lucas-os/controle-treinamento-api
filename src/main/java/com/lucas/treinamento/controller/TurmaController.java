@@ -1,13 +1,11 @@
 package com.lucas.treinamento.controller;
 
-import com.lucas.treinamento.model.Curso;
 import com.lucas.treinamento.model.Turma;
 import com.lucas.treinamento.service.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController

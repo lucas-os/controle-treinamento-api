@@ -1,9 +1,7 @@
 package com.lucas.treinamento.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
 import java.time.LocalDate;
-import java.util.BitSet;
 
 @JsonPropertyOrder({
         "codigo",

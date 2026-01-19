@@ -1,6 +1,5 @@
 package com.lucas.treinamento.repository;
 
-import com.lucas.treinamento.model.Curso;
 import com.lucas.treinamento.model.Turma;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,9 +21,21 @@ public class TurmaRepository {
         jdbcTemplate.update(sql, turma.getInicio(), turma.getFim(), turma.getLocal(), turma.getCodigoCurso());
     }
 
-    public void deletarTurma(int codigo){
-        String sql = "DELETE FROM Turma WHERE Codigo = ?";
-        jdbcTemplate.update(sql, codigo);
+    public void deletarTurmaPorCodigo(int codigoTurma) {
+
+        String sqlParticipantes = "DELETE FROM TurmaParticipante WHERE Turma = ?";
+        jdbcTemplate.update(sqlParticipantes, codigoTurma);
+
+        String sqlTurma = "DELETE FROM Turma WHERE Codigo = ?";
+        jdbcTemplate.update(sqlTurma, codigoTurma);
+    }
+
+    public void deletarTurmasPorCurso(int codigoCurso){
+        String sqlParticipantes = "DELETE FROM TurmaParticipante WHERE Turma IN (SELECT Codigo FROM Turma WHERE Curso = ?)";
+        jdbcTemplate.update(sqlParticipantes, codigoCurso);
+
+        String sqlTurma = "DELETE FROM Turma WHERE Curso = ?";
+        jdbcTemplate.update(sqlTurma, codigoCurso);
     }
 
     public void alterarTurma(Turma turma){
@@ -33,7 +44,6 @@ public class TurmaRepository {
     }
 
     public List<Turma> buscarTurmasPorCurso(Integer codigoCurso){
-
         String sql = "SELECT Turma.Codigo, Inicio, Fim, Local, Curso, COUNT(TurmaParticipante.Codigo) AS quantidadeParticipantes FROM Turma " + //LEFT JOIN para cada turma tente achar registros na tabela TP que tem mesmo codigo da turma
                      "LEFT JOIN TurmaParticipante ON Turma.Codigo = TurmaParticipante.Turma WHERE Turma.Curso = ? " +
                      "GROUP BY Codigo, Inicio, Fim, Local, Curso ORDER BY Turma.Inicio, Turma.Fim";
@@ -49,5 +59,21 @@ public class TurmaRepository {
             return turma;
         });
         return jdbcTemplate.query(sql, mapper, codigoCurso);
+    }
+
+    public Turma buscarTurmasPorCodigo(int codigo){
+        String sql = "SELECT Codigo, Inicio, Fim, Local, Curso FROM Turma WHERE Codigo = ?";
+
+        RowMapper<Turma> mapper = (rs, rowNum) -> {
+            Turma turma = new Turma();
+            turma.setCodigo(rs.getInt("Codigo"));
+            turma.setInicio(rs.getDate("Inicio").toLocalDate());
+            turma.setFim(rs.getDate("Fim").toLocalDate());
+            turma.setLocal(rs.getString("Local"));
+            turma.setCodigoCurso(rs.getInt("Curso"));
+            return turma;
+        };
+
+        return jdbcTemplate.queryForObject(sql, mapper, codigo);
     }
 }
